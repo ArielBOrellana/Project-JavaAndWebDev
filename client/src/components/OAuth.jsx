@@ -17,8 +17,11 @@ export default function OAuth() {
 
             const result = await signInWithPopup(auth, provider); // Trigger Google sign-in popup and get result
 
+            // Get the API URL (Render URL)
+            const API_URL = import.meta.env.VITE_API_URL || '';
+
             // Send the user's Google info to the backend API for further authentication and handling
-            const res = await fetch('/api/auth/google', {
+            const res = await fetch(`${API_URL}/api/auth/google`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
