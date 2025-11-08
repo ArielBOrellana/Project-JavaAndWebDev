@@ -10,7 +10,7 @@ export default function Profile() {
   const navigate = useNavigate();
   const [showListingsError, setShowListingsError] = useState(false);
   const [userListings, setUserListings] = useState([]);
-  const API_URL = 'https://project-javaandwebdev.onrender.com';  // Get the API URL (Render URL)
+  const API_URL = import.meta.env.VITE_API_URL || '';  // Get the API URL (Render URL)
 
   {/* onClick function for deleting user with dispatch and navigate */}
   const handleDeleteUser = async () => {
