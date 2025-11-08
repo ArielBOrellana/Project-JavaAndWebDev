@@ -38,9 +38,12 @@ app.use(cors({
     credentials: true, // MUST be true to allow the browser to send cookies (like access_token)
 }));
 
-// Start the server on port 3000
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+// Use process.env.PORT (provided by Render) or fallback to 3000 for local use.
+const port = process.env.PORT || 3000;
+
+// Start the server on the correct dynamic port
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
 
 // Route handlers for different API endpoints
