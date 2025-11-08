@@ -10,12 +10,13 @@ export default function Profile() {
   const navigate = useNavigate();
   const [showListingsError, setShowListingsError] = useState(false);
   const [userListings, setUserListings] = useState([]);
+  const API_URL = import.meta.env.VITE_API_URL || '';  // Get the API URL (Render URL)
 
   {/* onClick function for deleting user with dispatch and navigate */}
   const handleDeleteUser = async () => {
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+      const res = await fetch(`${API_URL}/api/user/delete/${currentUser._id}`, {
         method: 'DELETE',
       });
       const data = await res.json();
@@ -34,7 +35,7 @@ export default function Profile() {
   const handleSignOut = async () => {
     try {
       dispatch(signOutUserStart());
-      const res = await fetch('/api/auth/signout');
+      const res = await fetch(`${API_URL}/api/auth/signout`);
       const data = await res.json();
       if (data.success === false) {
         dispatch(signOutUserFailure(data.message));
@@ -51,7 +52,7 @@ export default function Profile() {
   const handleShowListings = async () => {
     try {
       setShowListingsError(false);
-      const res = await fetch(`/api/user/listings/${currentUser._id}`);
+      const res = await fetch(`${API_URL}/api/user/listings/${currentUser._id}`);
       const data = await res.json();
       if (data.success === false){
         setShowListingsError(true);
@@ -66,7 +67,7 @@ export default function Profile() {
   {/* Function to delete user listing */}
   const handleDeleteListing = async (listingID) => {
     try {
-      const res = await fetch(`/api/listing/delete/${listingID}`, {
+      const res = await fetch(`${API_URL}/api/listing/delete/${listingID}`, {
         method: 'DELETE',
       });
       const data = await res.json();
