@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import userRouter from './routes/user.route.js';
@@ -23,6 +24,19 @@ const app = express(); // Initialize Express app
 app.use(express.json()); // Middleware to parse incoming JSON requests
 
 app.use(cookieParser()); // Middleware to parse cookies in requests
+
+// Cors Configuration
+// This block allows Netlify frontend to securely communicate with Render backend.
+const allowedOrigins = [
+    'https://real-estate-marketplace1.netlify.app', // Deployed Frontend
+    'http://localhost:5173',                       // Common Vite Development Server
+    'http://localhost:3000',                       // My Backend's Local Server
+];
+
+app.use(cors({
+    origin: allowedOrigins,
+    credentials: true, // MUST be true to allow the browser to send cookies (like access_token)
+}));
 
 // Start the server on port 3000
 app.listen(3000, () => {
