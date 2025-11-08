@@ -21,6 +21,8 @@ const __dirname = path.resolve(); // Resolve the current directory path to ensur
 
 const app = express(); // Initialize Express app
 
+app.set('trust proxy', 1); // Trust proxy for secure cookie to be read for authentication
+
 app.use(express.json()); // Middleware to parse incoming JSON requests
 
 app.use(cookieParser()); // Middleware to parse cookies in requests
