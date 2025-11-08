@@ -26,7 +26,11 @@ export const signin = async (req, res, next) => {
         if (!validPassword) return next(errorHandler(401, 'Wrong credentials!'));
         const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET); //Creating a hashed token using JWT
         const { password: pass, ...rest } = validUser._doc; //Making sure not to send the password back to the user, danger for leaks
-        res.cookie('access_token', token, { httpOnly: true }).status(200).json(rest); //Creating a cookie for the users session
+        res.cookie('access_token', token, { 
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None',
+         }).status(200).json(rest); //Creating a cookie for the users session
     } catch (error) {
         next(error);
     }
@@ -40,7 +44,11 @@ export const google = async (req, res, next) => {
             const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
             const { password: pass, ...rest } = user._doc;
             res
-            .cookie('access_token', token, { httpOnly: true })
+            .cookie('access_token', token, { 
+                httpOnly: true,
+                secure: true,
+                sameSite: 'None',
+             })
             .status(200)
             .json(rest);
         } else {
@@ -55,7 +63,11 @@ export const google = async (req, res, next) => {
             const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
             const { password: pass, ...rest } = newUser._doc;
             res
-            .cookie('access_token', token, { httpOnly: true })
+            .cookie('access_token', token, { 
+                httpOnly: true,
+                secure: true,
+                sameSite: 'None',
+             })
             .status(200)
             .json(rest);
         }
@@ -67,7 +79,10 @@ export const google = async (req, res, next) => {
 {/* Method for signing out the user */}
 export const signout = async (req, res, next) => {
     try {
-        res.clearCookie('access_token'); //Clearing cookie/access_token
+        res.clearCookie('access_token', { //Clearing cookie/access_token
+            secure: true,
+            sameSite: 'None',
+        }); 
         res.status(200).json('User has been signed out');
     } catch (error) {
         next(error)
