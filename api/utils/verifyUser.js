@@ -5,7 +5,13 @@ import jwt from "jsonwebtoken";
     Ensures that only authenticated users can access protected routes */}
 export const verifyToken = (req, res, next) => {
     // Retrieve the token from the cookies
-    const token = req.cookies.access_token;
+    let token = req.cookies.access_token;
+
+    // Remove potential surrounding quotes ("") that may be added when sending 
+    // secure, cross-site cookies (due to trust proxy/SameSite settings).
+    if (token) {
+        token = token.replace(/"/g, '').trim();
+    }
 
     // If no token is found, return an unauthorized error
     if (!token) return next(errorHandler(401, 'Unauthorized'));
