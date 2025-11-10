@@ -29,7 +29,7 @@ export const signin = async (req, res, next) => {
         res.cookie('access_token', token, { 
             httpOnly: true,
             secure: true,
-            sameSite: 'None',
+            sameSite: 'none',
          }).status(200).json(rest); //Creating a cookie for the users session
     } catch (error) {
         next(error);
@@ -47,7 +47,7 @@ export const google = async (req, res, next) => {
             .cookie('access_token', token, { 
                 httpOnly: true,
                 secure: true,
-                sameSite: 'None',
+                sameSite: 'none',
              })
             .status(200)
             .json(rest);
@@ -66,7 +66,7 @@ export const google = async (req, res, next) => {
             .cookie('access_token', token, { 
                 httpOnly: true,
                 secure: true,
-                sameSite: 'None',
+                sameSite: 'none',
              })
             .status(200)
             .json(rest);
@@ -81,7 +81,7 @@ export const signout = async (req, res, next) => {
     try {
         res.clearCookie('access_token', { //Clearing cookie/access_token
             secure: true,
-            sameSite: 'None',
+            sameSite: 'none',
         }); 
         res.status(200).json('User has been signed out');
     } catch (error) {
