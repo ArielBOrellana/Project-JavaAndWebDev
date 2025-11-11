@@ -26,10 +26,12 @@ export const signin = async (req, res, next) => {
         if (!validPassword) return next(errorHandler(401, 'Wrong credentials!'));
         const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET); //Creating a hashed token using JWT
         const { password: pass, ...rest } = validUser._doc; //Making sure not to send the password back to the user, danger for leaks
+        const renderHostname = 'project-javaandwebdev.onrender.com'; // Get the hostname from the request (Render's full URL)
         res.cookie('access_token', token, { 
             httpOnly: true,
             secure: true,
             sameSite: 'none',
+            domain: renderHostname,
          }).status(200).json(rest); //Creating a cookie for the users session
     } catch (error) {
         next(error);
@@ -40,6 +42,7 @@ export const signin = async (req, res, next) => {
 export const google = async (req, res, next) => {
     try {
         const user = await User.findOne({ email: req.body.email })
+        const renderHostname = 'project-javaandwebdev.onrender.com'; // Get the hostname from the request (Render's full URL)
         if (user) {
             const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
             const { password: pass, ...rest } = user._doc;
@@ -48,6 +51,7 @@ export const google = async (req, res, next) => {
                 httpOnly: true,
                 secure: true,
                 sameSite: 'none',
+                domain: renderHostname,
              })
             .status(200)
             .json(rest);
@@ -62,11 +66,13 @@ export const google = async (req, res, next) => {
             await newUser.save();
             const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
             const { password: pass, ...rest } = newUser._doc;
+            const renderHostname = 'project-javaandwebdev.onrender.com'; // Get the hostname from the request (Render's full URL)
             res
             .cookie('access_token', token, { 
                 httpOnly: true,
                 secure: true,
                 sameSite: 'none',
+                domain: renderHostname,
              })
             .status(200)
             .json(rest);

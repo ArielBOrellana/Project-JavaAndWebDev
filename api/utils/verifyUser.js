@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 {/* Middleware to verify a user's authentication token.
     Ensures that only authenticated users can access protected routes */}
 export const verifyToken = (req, res, next) => {
+    console.log('Received Cookies:', req.cookies);
     // Retrieve the token from the cookies
     let token = req.cookies.access_token;
     let source = 'cookie';
