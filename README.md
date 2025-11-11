@@ -31,9 +31,8 @@ Ensure you have the following installed:
 
 3. Create a `.env` file in the backend with the following variables:
     ```env
-    MONGO = "mongodb+srv://arielborellana:arielborellana@rem.wf7jfao.mongodb.net/?retryWrites=true&w=majority&appName=REM"
-    JWT_SECRET = 'kfjnefecppaow4839p32'
-
+    MONGO = 
+    JWT_SECRET = 
 4. Start the backend server:
     ```bash
     npm run dev
@@ -49,7 +48,7 @@ Ensure you have the following installed:
 
 3. Create a `.env` in the frontend with the following variables:
     ```env
-    VITE_FIREBASE_API_KEY = "AIzaSyDB1vCX-vh7HqdEMhEfDT7SKryDxy43bUE"
+    VITE_FIREBASE_API_KEY = 
 
 4. Start development server:
     ```bash
