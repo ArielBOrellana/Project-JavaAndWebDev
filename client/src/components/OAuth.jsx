@@ -34,6 +34,11 @@ export default function OAuth() {
             });
             const data = await res.json(); // Parse response from the backend
 
+            // Save the token from the response body to Local Storage
+            if (data.token) {
+                localStorage.setItem('jwt_token', data.token);
+            }
+
             dispatch(signInSuccess(data)); // Dispatch success action to store user info in Redux state
             navigate('/'); // Redirect to the homepage after successful login
         } catch (error) {

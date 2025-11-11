@@ -54,17 +54,20 @@ export default function Profile() {
   {/* Function to show the users listings */}
   const handleShowListings = async () => {
     try {
-      // Get the token from Local Storage
-        const token = localStorage.getItem('jwt_token'); 
+      setShowListingsError(false);
 
+      // Get the token from Local Storage (persists session)
+        const token = localStorage.getItem('jwt_token'); 
+        
+        // Authorization Check (for token existence)
         if (!token) {
-            // Handle case where token is missing (user logged out or session expired)
             console.error('Authentication token is missing.');
             setShowListingsError(true);
+            // Optionally, dispatch a sign-out/redirect here if no token is found
             return;
         }
 
-      setShowListingsError(false);
+      // Prepare the request with the Authorization header
       const res = await fetch(`${API_URL}/api/user/listings/${currentUser._id}`, {
         method: 'GET',
         credentials: 'include',
