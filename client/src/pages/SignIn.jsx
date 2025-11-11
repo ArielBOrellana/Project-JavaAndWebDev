@@ -40,6 +40,7 @@ export default function SignIn() {
         // Save the token received in the response body to Local Storage
         if (data.token) {
           localStorage.setItem('jwt_token', data.token);
+          console.log('Token saved to Local Storage:', localStorage.getItem('jwt_token'));
         }
         
         dispatch(signInSuccess(data));  {/* Dispatch success action and save data */}
