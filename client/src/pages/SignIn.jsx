@@ -36,6 +36,12 @@ export default function SignIn() {
           dispatch(signInFailure(data.message));  {/* Dispatch failure action if sign in fails */}
           return;
         }
+
+        // Save the token received in the response body to Local Storage
+        if (data.token) {
+          localStorage.setItem('jwt_token', data.token);
+        }
+        
         dispatch(signInSuccess(data));  {/* Dispatch success action and save data */}
         navigate('/');  {/* Navigate to home page */}
     } catch (error) {

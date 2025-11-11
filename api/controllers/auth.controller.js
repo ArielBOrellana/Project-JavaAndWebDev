@@ -32,7 +32,10 @@ export const signin = async (req, res, next) => {
             secure: true,
             sameSite: 'none',
             domain: renderHostname,
-         }).status(200).json(rest); //Creating a cookie for the users session
+         }).status(200).json({
+            ...rest,
+            token: token, // The client needs this to save to Local Storage
+        }); //Creating a cookie for the users session
     } catch (error) {
         next(error);
     }
@@ -54,7 +57,10 @@ export const google = async (req, res, next) => {
                 domain: renderHostname,
              })
             .status(200)
-            .json(rest);
+            .json({
+                ...rest,
+                token: token,
+            });
         } else {
             //If user does not exist, create a password because it is required
             const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
@@ -75,7 +81,10 @@ export const google = async (req, res, next) => {
                 domain: renderHostname,
              })
             .status(200)
-            .json(rest);
+            .json({
+                ...rest,
+                token: token,
+            });
         }
     } catch (error) {
         next(error)
