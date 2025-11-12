@@ -5,13 +5,14 @@ import ListingItem from '../components/ListingItem';
 export default function Home() {
   const [saleListings, setSaleListings] = useState([]); // Holds recent sale listings fetched from the API
   const [rentListings, setRentListings] = useState([]); // Holds recent rental listings fetched from the API
+  const API_URL = import.meta.env.VITE_API_URL || ''; // Define API URL
   console.log(saleListings); // Debugging: Logs the fetched sale listings to the console
 
   {/* Functions for fetching listings for sale and rent */}
   useEffect(() => {
     const fetchRentListings = async () => {
       try {
-        const res = await fetch('/api/listing/get?type=rent&limit=4'); // Fetches up to 4 rental listings
+        const res = await fetch(`${API_URL}/api/listing/get?type=rent&limit=4`); // Fetches up to 4 rental listings
         const data = await res.json();
         setRentListings(data); // Updates the state with rental listings
         fetchSaleListings(); // Fetches sale listings after rent listings are fetched
@@ -22,7 +23,7 @@ export default function Home() {
 
     const fetchSaleListings = async () => {
       try {
-        const res = await fetch('/api/listing/get?type=sell&limit=4'); // Fetches up to 4 sale listings
+        const res = await fetch(`${API_URL}/api/listing/get?type=sell&limit=4`); // Fetches up to 4 sale listings
         const data = await res.json();
         setSaleListings(data); // Updates the state with sale listings
       } catch (error) {
