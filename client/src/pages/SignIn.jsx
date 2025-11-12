@@ -9,6 +9,7 @@ export default function SignIn() {
   const { loading, error } = useSelector((state) => state.user);  {/* Access loading and error state from Redux */}
   const navigate = useNavigate(); {/* Navigate to home page after successful sign in */}
   const dispatch = useDispatch(); {/* Dispatch actions to update Redux state */}
+  const API_URL = import.meta.env.VITE_API_URL || '';
 
   {/* Handle changes in form fields */}
   const handleChange = (e) => {
@@ -23,7 +24,7 @@ export default function SignIn() {
     e.preventDefault();
     try {
       dispatch(signInStart());  {/* Dispatch sign in start action */}
-      const res = await fetch('/api/auth/signin', {
+      const res = await fetch(`${API_URL}/api/auth/signin`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

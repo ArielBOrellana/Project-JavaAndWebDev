@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 export default function CreateListing() {
     const { currentUser } = useSelector((state) => state.user); // Get the current user from Redux
     const navigate = useNavigate(); // Navigation utility from react-router-dom
+    const API_URL = import.meta.env.VITE_API_URL || '';
 
     // Form state to manage listing details and other behaviors
     const [files, setFiles] = useState([]); // Temporarily holds selected image files for upload
@@ -134,10 +135,11 @@ export default function CreateListing() {
             setLoading(true);
             setError(false);
 
-            const res = await fetch('/api/listing/create', {
+            const res = await fetch(`${API_URL}/api/listing/create`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${currentUser.token}`,
               },
               body: JSON.stringify({...formData, userRef: currentUser._id,}), // Includes user ID
             });

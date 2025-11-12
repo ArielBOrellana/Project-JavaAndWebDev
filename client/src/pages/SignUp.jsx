@@ -10,6 +10,7 @@ export default function SignUp() {
   const [loading, setLoading] = useState(false);
   
   const navigate = useNavigate(); // Navigate to sign in page after registration
+  const API_URL = import.meta.env.VITE_API_URL || '';
 
   // Handle changes in form field and update form data
   const handleChange = (e) => {
@@ -24,7 +25,7 @@ export default function SignUp() {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await fetch('/api/auth/signup', {
+      const res = await fetch(`${API_URL}/api/auth/signup`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

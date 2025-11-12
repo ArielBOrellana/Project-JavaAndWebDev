@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 export default function Contact({ listing }) {
-    // State to store landlord details fetched from the API
-    const [landlord, setLandlord] = useState(null);
+    const [landlord, setLandlord] = useState(null);  // State to store landlord details fetched from the API
+    const API_URL = import.meta.env.VITE_API_URL || '';
 
     /*
      * Fetch landlord data using the user reference from the listing.
@@ -14,7 +14,7 @@ export default function Contact({ listing }) {
         const fetchLandlord = async () => {
             try {
                 // Fetching landlord data from the backend API
-                const res = await fetch(`/api/user/${listing.userRef}`);
+                const res = await fetch(`${API_URL}/api/user/${listing.userRef}`);
                 const data = await res.json();
                 setLandlord(data); // Store the fetched data in state
             } catch (error) {
