@@ -89,6 +89,8 @@ export default function Profile() {
 
   {/* Function to delete user listing */}
   const handleDeleteListing = async (listingID) => {
+    const token = currentUser?.token;
+    
     try {
       const res = await fetch(`${API_URL}/api/listing/delete/${listingID}`, {
         method: 'DELETE',
