@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 export default function Profile() {
-  const { currentUser } = useSelector((state) => state.user)
+  const { currentUser, loading } = useSelector((state) => state.user)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showListingsError, setShowListingsError] = useState(false);
