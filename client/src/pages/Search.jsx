@@ -7,6 +7,7 @@ export default function Search() {
     const [loading, setLoading] = useState(false); // Tracks loading state
     const [listings, setListings] = useState([]); // Stores fetched listings
     const [showMore, setShowMore] = useState(false); // Indicates if more listings can be loaded
+    const API_URL = import.meta.env.VITE_API_URL || '';
     const [sidebarData, setSidebarData] = useState({
         type: 'all', // Default type filter
         parking: false, // Default parking filter
@@ -47,7 +48,7 @@ export default function Search() {
             setLoading(true);
             setShowMore(false);
             const searchQuery = urlParams.toString();
-            const res = await fetch(`/api/listing/get?${searchQuery}`);
+            const res = await fetch(`${API_URL}/api/listing/get?${searchQuery}`);
             const data = await res.json();
             if (data.length > 8){ // Show "Show More" button if more than 8 listings
                 setShowMore(true);
@@ -104,7 +105,7 @@ export default function Search() {
         urlParams.set('startIndex', startIndex); // Start fetching from current listing count
 
         const searchQuery = urlParams.toString();
-        const res = await fetch(`/api/listing/get?${searchQuery}`);
+        const res = await fetch(`${API_URL}/api/listing/get?${searchQuery}`);
         const data = await res.json();
         if (data.length < 9){ // Hide 'show more' if fewer than 9 listings
             setShowMore(false);
