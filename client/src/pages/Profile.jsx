@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 export default function Profile() {
-  const {currentUser} = useSelector((state) => state.user)
+  const { currentUser } = useSelector((state) => state.user)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showListingsError, setShowListingsError] = useState(false);
@@ -56,14 +56,13 @@ export default function Profile() {
     try {
       setShowListingsError(false);
 
-      // Get the token from Local Storage (persists session)
-        const token = localStorage.getItem('jwt_token'); 
+        // Get the token directly from the Redux state
+        const token = currentUser?.token; 
         
-        // Authorization Check (for token existence)
-        if (!token) {
-            console.error('Authentication token is missing.');
+        // Ensure both the token and the user ID are available
+        if (!token || !currentUser?._id) { 
+            console.error('Authentication token is missing from Redux state (currentUser.token).');
             setShowListingsError(true);
-            // Optionally, dispatch a sign-out/redirect here if no token is found
             return;
         }
 
@@ -142,7 +141,10 @@ export default function Profile() {
       </Link> 
 
       {/* If user has listings, they are shown here */}
-      <button onClick={handleShowListings} className='w-full pt-3'>Show listings</button>
+      <button 
+        onClick={handleShowListings} 
+        disabled={loading || !currentUser} // Make sure button is disabled while loading
+        className='w-full pt-3'>Show listings</button>
       <p className='text-red-700 mt-5'>
         {showListingsError ? 'Error showing listing' : ''}
       </p>
