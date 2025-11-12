@@ -93,6 +93,7 @@ export default function Profile() {
       const res = await fetch(`${API_URL}/api/listing/delete/${listingID}`, {
         method: 'DELETE',
         credentials: 'include',
+        'Authorization': `Bearer ${token}`,
       });
       const data = await res.json();
 
